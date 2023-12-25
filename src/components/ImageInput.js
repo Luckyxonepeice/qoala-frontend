@@ -1,10 +1,11 @@
 import React, { useState,useEffect,useCallback} from "react";
 import '../static/ImageInput.css'
-import {uploadCard,cardInfo,deleteCard} from '../API/api'
+import {uploadCard,cardInfo,deleteCard,updateCard} from '../API/api'
 import Cardinfo from "./Cardinfo";
-function  ImageInput() {
+const  ImageInput = () => {
 
     const [file, setFile] = useState(null);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
 
     const [cards, setCards] = useState([
       {
@@ -18,6 +19,9 @@ function  ImageInput() {
       },
     ]);
 
+    const handleUpdate =()=>{
+        setShowUpdateForm(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getCards = async () => {
       const { result } = await cardInfo();
@@ -27,6 +31,11 @@ function  ImageInput() {
       getCards();
     }, []);
 
+    const Data_update = async (data)=>{
+        await updateCard(data);
+        setShowUpdateForm(false);
+        getCards();
+    }
     const handleSubmit = useCallback(
       async (e) => {
         e.preventDefault();
@@ -52,7 +61,7 @@ function  ImageInput() {
 
         await deleteCard(cardId)
         await getCards();
-        
+
       } catch (error) {
         console.error("Error deleting card:", error);
       }
@@ -66,15 +75,21 @@ function  ImageInput() {
  
     return (
         <div className="app-container">
-            <h2>Add Image:</h2>
-            <form onSubmit={handleSubmit}>
-            <input type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} />
-            <button type="submit" name="upload" onSubmit={handleSubmit}>
+            
+            {!showUpdateForm && 
+            <>
+                <h2>Add Image:</h2>
+                <form onSubmit={handleSubmit}>
+                <input type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} />
+                <button type="submit" name="upload" onSubmit={handleSubmit}>
                 Upload
-            </button>
-            </form>
+                </button>
+                </form>
+            </>
+            }
             {
-                cards.map( (data)=><Cardinfo key={data._id} data={data} onDelete={handleDelete}/>)
+                cards.map( (data)=><Cardinfo key={data._id} data={data} onDelete={handleDelete} onUpdate={handleUpdate}
+                update_active={showUpdateForm} data_update={Data_update}/>)
             }
         </div>
     );

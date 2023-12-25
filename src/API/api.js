@@ -40,3 +40,22 @@ export async function deleteCard(cardId){
         console.error("Error deleting card:", error);
     }
 };
+
+export async function updateCard(data){
+    const cardId=data._id;
+    try{
+        const response = await fetch(`${API_URL}/update/card/${cardId}`,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to Post the Data');
+        }
+    }catch (error) {
+        console.error("Error Updating the card:", error);
+    }
+}
