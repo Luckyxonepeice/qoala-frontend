@@ -1,9 +1,22 @@
 const API_URL="http://localhost:5000";
 
-export async function cardInfo(){
+export async function cardInfo(filter){
 
-    //console.log("!");
-    const response = await fetch(`${API_URL}/get/card`);
+    let queryParams = {};
+
+    // Check if the filter is 'prevDate'
+    if (filter === 'prevCard') {
+        queryParams = { dateType: 'prevCard' };
+    }
+
+    // Check if the filter matches one of the given statuses
+    if (['complete', 'incomplete', 'wrongData'].includes(filter)) {
+        queryParams = { status: filter };
+    }
+
+    const queryString = new URLSearchParams(queryParams).toString();
+
+    const response = await fetch(`${API_URL}/get/card?${queryString}`);
     //console.log(response.json());
     return response.json();
 }

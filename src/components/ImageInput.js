@@ -2,31 +2,34 @@ import React, { useState,useEffect,useCallback} from "react";
 import '../static/ImageInput.css'
 import {uploadCard,cardInfo,deleteCard,updateCard} from '../API/api'
 import Cardinfo from "./Cardinfo";
+import CheckBox from "./CheckBox";
 const  ImageInput = () => {
 
     const [file, setFile] = useState(null);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [selectedCardId, setSelectedCardId] = useState(null);
 
-    const [cards, setCards] = useState([{
-        _id:"1234",
-        idCardNumber: "",
-        Name: "",
-        Last_name: "",
-        Date_of_birth: "",
-        Date_of_issue: "",
-        Date_of_Expiry: "",
-        Status: "",
-      },]);
+    const [cards, setCards] = useState([]);
+
+    const [selectedFilter, setSelectedFilter] = useState(null);
+
+    const handleFilterChange = (e) => {
+        setSelectedFilter(e.target.value);
+    };
+
+    const getCards = async () => {
+        // Prepare filter parameters based on selected checkboxes
+        //console.log(selectedFilter);
+        const { result } = await cardInfo(selectedFilter);
+        //console.log(result);
+        setSelectedCardId(null);
+        setCards(result);
+    };
 
     const handleUpdate =()=>{
         setShowUpdateForm(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getCards = async () => {
-      const { result } = await cardInfo();
-      setCards(result);
-    };
     const Data_update = async (data)=>{
         
         await updateCard(data);
@@ -37,7 +40,7 @@ const  ImageInput = () => {
 
     useEffect(() => {
       getCards();
-    }, []);
+    }, [selectedFilter]);
 
     
     const handleSubmit = useCallback(
@@ -81,7 +84,7 @@ const  ImageInput = () => {
  
     return (
         <div className="app-container">
-            
+            <CheckBox handleChange={handleFilterChange} selectedFilter={selectedFilter}/>
             {!showUpdateForm && 
             <>
                 <h2>Add Image:</h2>
@@ -98,6 +101,7 @@ const  ImageInput = () => {
                 update_active={showUpdateForm} data_update={Data_update}
                 selectedCardId={selectedCardId} setSelectedCardId={setSelectedCardId} />)
             }
+             
         </div>
     );
 }
