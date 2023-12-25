@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import Cardinfo from './components/Cardinfo';
 import {cardInfo} from './API/api'
+import ImageInput from './components/ImageInput';
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
   const getCards = async()=>{
 
     const {result} = await cardInfo();
-    console.log(result);
+    //console.log(result);
     setCards(result);
   }
   useEffect(()=>{
@@ -32,7 +33,7 @@ function App() {
       {
         cards.map( (val)=> <Cardinfo data={val}/>)
       }
-      
+      <ImageInput/>
     </div>
   );
 }

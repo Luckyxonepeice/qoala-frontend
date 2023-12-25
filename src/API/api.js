@@ -7,3 +7,18 @@ export async function cardInfo(){
     //console.log(response.json());
     return response.json();
 }
+
+export async function uploadCard(file){
+
+    //console.log(file);
+    const formData= new FormData();
+    formData.append('card',file);
+
+    const response = await fetch(`${API_URL}/add/card`,{
+        method:'POST',
+        body:formData
+    });
+
+    console.log(response);
+
+} 
