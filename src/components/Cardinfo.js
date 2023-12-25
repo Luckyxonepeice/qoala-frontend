@@ -12,6 +12,7 @@ const Cardinfo = ({data}) => {
         Status
     } = data;
     
+    
 
   return (
     <div className="card-container">
