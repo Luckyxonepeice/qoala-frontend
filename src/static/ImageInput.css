@@ -1,5 +1,4 @@
 .app-container {
-    position: absolute;
-    top: 20px;  /* Adjust as per your requirement */
-    right: 20px;  /* Adjust as per your requirement */
-  }
+  position: relative; /* Set position to relative for the container */
+  padding-top: 20px; /* Add some top padding to give space */
+}

@@ -1,8 +1,9 @@
 import React , {useState} from 'react';
 import '../static/cardinfo.css';  
 
-const Cardinfo = ({data}) => {
+const Cardinfo = ({data,onDelete}) => {
     const {
+        _id,
         idCardNumber,
         Name,
         Last_name,
@@ -13,6 +14,9 @@ const Cardinfo = ({data}) => {
     } = data;
     
     
+    const handleDelete=()=>{
+        onDelete(_id);
+    }
 
   return (
     <div className="card-container">
@@ -28,7 +32,7 @@ const Cardinfo = ({data}) => {
       </div>
       <div className="card-actions">
         <button >Update</button>
-        <button >Delete</button>
+        <button onClick={handleDelete}>Delete</button>
       </div>
     </div>
   );

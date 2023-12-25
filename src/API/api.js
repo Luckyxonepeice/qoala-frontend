@@ -22,3 +22,21 @@ export async function uploadCard(file){
     console.log(response);
 
 } 
+
+export async function deleteCard(cardId){
+
+    try{
+        const response = await fetch(`${API_URL}/delete/card/${cardId}`,{
+            method:'DELETE',
+            headers:{
+                'Content-Type':'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete the card');
+        }
+    }catch (error) {
+        console.error("Error deleting card:", error);
+    }
+};
