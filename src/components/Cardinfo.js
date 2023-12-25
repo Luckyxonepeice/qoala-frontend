@@ -1,7 +1,7 @@
-import React,{useState} from 'react';
+import React from 'react';
 import '../static/cardinfo.css';  
 import UpdateForm from './UpdateForm'
-const Cardinfo = ({data,onDelete,onUpdate,update_active,data_update}) => {
+const Cardinfo = ({data,onDelete,onUpdate,data_update,selectedCardId, setSelectedCardId}) => {
   
     const {
         _id,
@@ -21,17 +21,17 @@ const Cardinfo = ({data,onDelete,onUpdate,update_active,data_update}) => {
 
     const handleUpdate=()=>{
       onUpdate(true);
+      setSelectedCardId(_id);
     }
 
     const updatedData = (data) =>{
       data_update(data);
 
     }
-    
+  
 
-  return (
-    !update_active?(
-    <div className="card-container">
+    if(!selectedCardId){
+      return(<div className="card-container">
       <h3>ID Card Details</h3>
       <div className="card-content">
         <p><strong>ID Card Number:</strong> {idCardNumber}</p>
@@ -46,9 +46,12 @@ const Cardinfo = ({data,onDelete,onUpdate,update_active,data_update}) => {
         <button onClick={handleUpdate}>Update</button>
         <button onClick={handleDelete}>Delete</button>
       </div>
-    </div>
-    ) : <UpdateForm key={data._id} data={data} update={updatedData}/>
-  );
+      </div>)
+    }
+    if(selectedCardId===_id) {
+      return <UpdateForm key={data._id} data={data} update={updatedData}/>
+    }
+    
 };
 
 export default Cardinfo;

@@ -6,9 +6,10 @@ const  ImageInput = () => {
 
     const [file, setFile] = useState(null);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [selectedCardId, setSelectedCardId] = useState(null);
 
-    const [cards, setCards] = useState([
-      {
+    const [cards, setCards] = useState([{
+        _id:"1234",
         idCardNumber: "",
         Name: "",
         Last_name: "",
@@ -16,8 +17,7 @@ const  ImageInput = () => {
         Date_of_issue: "",
         Date_of_Expiry: "",
         Status: "",
-      },
-    ]);
+      },]);
 
     const handleUpdate =()=>{
         setShowUpdateForm(true);
@@ -27,15 +27,19 @@ const  ImageInput = () => {
       const { result } = await cardInfo();
       setCards(result);
     };
+    const Data_update = async (data)=>{
+        
+        await updateCard(data);
+        setShowUpdateForm(false);
+        setSelectedCardId(null);
+        getCards();
+    }
+
     useEffect(() => {
       getCards();
     }, []);
 
-    const Data_update = async (data)=>{
-        await updateCard(data);
-        setShowUpdateForm(false);
-        getCards();
-    }
+    
     const handleSubmit = useCallback(
       async (e) => {
         e.preventDefault();
@@ -46,6 +50,8 @@ const  ImageInput = () => {
             getCards();
 
             setFile(null);
+            document.getElementById('fileInput').value = '';
+
           } catch (error) {
             console.error("Error uploading card:", error);
           }
@@ -80,7 +86,7 @@ const  ImageInput = () => {
             <>
                 <h2>Add Image:</h2>
                 <form onSubmit={handleSubmit}>
-                <input type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} />
+                <input id="fileInput" type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} />
                 <button type="submit" name="upload" onSubmit={handleSubmit}>
                 Upload
                 </button>
@@ -89,7 +95,8 @@ const  ImageInput = () => {
             }
             {
                 cards.map( (data)=><Cardinfo key={data._id} data={data} onDelete={handleDelete} onUpdate={handleUpdate}
-                update_active={showUpdateForm} data_update={Data_update}/>)
+                update_active={showUpdateForm} data_update={Data_update}
+                selectedCardId={selectedCardId} setSelectedCardId={setSelectedCardId} />)
             }
         </div>
     );

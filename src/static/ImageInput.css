@@ -1,4 +1,83 @@
-.app-container {
-  position: relative; /* Set position to relative for the container */
-  padding-top: 20px; /* Add some top padding to give space */
+/* ImageInput.css */
+
+/* Basic styling for the body and HTML */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4; /* A soft gray background */
 }
+
+/* Center the main content both horizontally and vertically */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f4; /* Match the body background */
+  padding: 20px;
+}
+
+/* Styling for individual card containers */
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  margin-top: 50px;
+  background-color: #ffffff; /* White background */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  max-width: 700px;
+
+  /* Gradient for a subtle colorful touch */
+  background: linear-gradient(135deg, #f9d5e5, #ee9ca7); /* Gradient from a light pink to coral */
+}
+
+/* Aesthetic adjustments for form elements */
+.card-form-container {
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #ff6b6b; /* Coral button color */
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #ff8a80; /* Darker shade on hover */
+}
+
+/* Additional styles can be added based on your design preferences */
